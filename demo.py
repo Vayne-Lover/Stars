@@ -1,6 +1,8 @@
 #-*-coding:utf-8-*-
 import re
 import urllib
+import numpy as np
+import pandas as pd
 
 class Tool:
     pattern1=re.compile('次查看')
@@ -21,13 +23,24 @@ def getHtml(url):
     return html
 
 def getStory(html):
+    name=[]
+    reply=[]
+    pv=[]
     tool=Tool()
     pattern=re.compile('<font color="#ff0000">(.*?)</p>',re.S)
-    result=re.findall(pattern,html)
-    for i in result:
-        print tool.replace(i)
+    res=re.findall(pattern,html)
+    for i in res:
+        result=tool.replace(i)
+        result=result.split()
+        name.append(result[0]+result[1])
+        reply.append(result[2])
+        pv.append(result[3])
+    data={'Name':name,'Reply':reply,'PageView':pv}
+    full_data=pd.DataFrame(data)
+    print full_data
 
-url="http://speed.gamebbs.qq.com/search.php?mod=forum&searchid=208&orderby=lastpost&ascdesc=desc&searchsubmit=yes&kw=【与星团的故事】"
+
+url="http://speed.gamebbs.qq.com/search.php?mod=forum&searchid=199&orderby=lastpost&ascdesc=desc&searchsubmit=yes&kw=【与星团的故事】"
 html=getHtml(url)
 story=getStory(html)
 
