@@ -1,18 +1,27 @@
-#-*-coding:utf-8-*-
+#-*- coding:utf-8 -*-
 import re
+import csv
+import pandas as pd
+import numpy as np
+name=[]
+reply=[]
+pv=[]
+s=[]
+s1="【s1】 heeeee 1 31"
+s2="【s2】 haaa 1 37"
+s3="【s3】 bdeff 2 23"
 
-s="【与星团的故事】 犹如痴呆般的傻苏 1 31"
-a=re.findall(r"(.*) ",s)
-pattern1=re.compile(r'【(.*) ')
-pattern2=re.compile(r'\D')
-pattern3=re.compile(r' +\d')
-b=re.sub(pattern1,"",s)
-c=re.sub(pattern2," ",s)
-d=re.sub(pattern3,"",c)
-e=s.split()
-#print "".join(a)
-a=e[0]
-b=e[1]
-c=e[2]
-d=e[3]
-print a,b,c,d
+
+s.append(s1)
+s.append(s2)
+s.append(s2)
+
+for i in s:
+    result=i.split()
+    name.append(result[0]+result[1])
+    reply.append(result[2])
+    pv.append(result[3])
+
+data={'Name':name,'Reply':reply,'PageView':pv}
+full_data=pd.DataFrame(data)
+print full_data
