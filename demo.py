@@ -1,5 +1,6 @@
 #-*-coding:utf-8-*-
 import re
+import csv
 import urllib
 import numpy as np
 import pandas as pd
@@ -37,7 +38,7 @@ def getStory(html):
         pv.append(result[3])
     data={'Name':name,'Reply':reply,'PageView':pv}
     full_data=pd.DataFrame(data)
-    print full_data
+    full_data.to_csv('data.csv', index=True)
 
 
 url="http://speed.gamebbs.qq.com/search.php?mod=forum&searchid=199&orderby=lastpost&ascdesc=desc&searchsubmit=yes&kw=【与星团的故事】"
