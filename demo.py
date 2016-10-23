@@ -33,15 +33,22 @@ def getStory(html):
     for i in res:
         result=tool.replace(i)
         result=result.split()
-        name.append(result[0]+result[1])
-        reply.append(result[2])
-        pv.append(result[3])
+        j=0
+        nameAppend=""
+        while not(result[j].isdigit()):
+            j+=1
+        for k in range(0,j):
+            nameAppend+=result[k]
+        name.append(nameAppend)
+        assert j<=len(result)-2
+        reply.append(result[j])
+        pv.append(result[j+1])
     data={'Name':name,'Reply':reply,'PageView':pv}
     full_data=pd.DataFrame(data)
     full_data.to_csv('data.csv', index=True)
 
 
-url="http://speed.gamebbs.qq.com/search.php?mod=forum&searchid=199&orderby=lastpost&ascdesc=desc&searchsubmit=yes&kw=【与星团的故事】"
+url="http://speed.gamebbs.qq.com/search.php?mod=forum&searchid=131&orderby=lastpost&ascdesc=desc&searchsubmit=yes&kw=【与星团的故事】"
 html=getHtml(url)
 story=getStory(html)
 
